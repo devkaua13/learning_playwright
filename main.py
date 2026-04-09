@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 import time
 
 
@@ -44,8 +44,10 @@ with sync_playwright() as pw:
     pagina2.get_by_role("button", name="Quero acessar as informações").click()
 
     # Esperar um elemento na tela
-    pagina2.get_by_role("link", name="quero garantir uma vaga").click()
-
+    novo_butao = pagina2.get_by_role("link", name="quero garantir uma vaga")
     
-    time.sleep(4)
+    expect(novo_butao).to_be_visible()
+    novo_butao.click()
+
+    time.sleep(10)
     navegador.close()
