@@ -4,21 +4,39 @@ import time
 
 with sync_playwright() as pw:
     navegador = pw.chromium.launch(headless=False)
-    # Abrir o navegador
-    pagina = navegador.new_page()
+
+    contexto = navegador.new_context()
+
+    # Abrir nova página no navegador
+    pagina = contexto.new_page()
 
     # Navegar para uma página
     pagina.goto("https://hashtagtreinamentos.com")
 
     # pegar informações da página
-    print(pagina.title())
+    # print(pagina.title())
 
     # Selecionar um elemento na tela
     # 1ª forma - Xpath
     # pagina.locator('xpath=/html/body/main/section[1]/div[2]/a').click()
 
     #2ª forma - get_buy
-    pagina.get_by_role("link", name="Quero aprender").click()
+    botao_quero_aprender = pagina.get_by_role("link", name="Quero aprender")
+
+    with contexto.expect_page() as pagina2_info:
+        botao_quero_aprender.click()
+
+    # Como capturar mais de um elemento
+    # links = pagina.get_by_role("link").all()
+    # for link in links:
+    #     print(link)
+
+    # Criando uma nova página em branco
+    # pagina2 = contexto.new_page()
+
+    # nova página -> criar contextos e depois 
+    pagina2 = pagina2_info.value
+    pagina2.goto("https://hashtagtreinamentos.com/curso-python")
 
     time.sleep(4)
     navegador.close()
