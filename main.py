@@ -38,5 +38,14 @@ with sync_playwright() as pw:
     pagina2 = pagina2_info.value
     pagina2.goto("https://hashtagtreinamentos.com/curso-python")
 
+    # Inserindo no formulario
+    pagina2.get_by_role("textbox", name="Seu primeiro nome").fill("joão")
+    pagina2.get_by_role("textbox", name="Seu melhor e-mail").fill("kmillakaua@gmail.com")
+    pagina2.get_by_role("button", name="Quero acessar as informações").click()
+
+    # Esperar um elemento na tela
+    pagina2.get_by_role("link", name="quero garantir uma vaga").click()
+
+    
     time.sleep(4)
     navegador.close()
