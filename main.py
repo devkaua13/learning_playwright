@@ -7,6 +7,8 @@ with sync_playwright() as pw:
     # Abrir o navegador
     pagina = navegador.new_page()
 
+    # Navegar para uma página
+    pagina.goto("https://hashtagtreinamentos.com")
 
     time.sleep(4)
     navegador.close()
